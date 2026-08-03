@@ -1,0 +1,3 @@
+configuration.nix.before-*
+*.bak
+result
