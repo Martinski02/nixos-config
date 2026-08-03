@@ -7,7 +7,7 @@
   boot.initrd.luks.devices."luks-c8c509f3-bcb2-47c2-8cff-6fa91a0d5dcc".device =
     "/dev/disk/by-uuid/c8c509f3-bcb2-47c2-8cff-6fa91a0d5dcc";
 
-  networking.hostName = "nixos";
+  networking.hostName = "martin-laptop";
 
   time.timeZone = "Europe/Vienna";
 

@@ -2,7 +2,12 @@
 
 {
   networking.networkmanager.enable = true;
-
-  # NixOS aktiviert die Firewall standardmäßig; wir deklarieren das explizit.
   networking.firewall.enable = true;
+
+  services.tailscale = {
+    enable = true;
+
+    # Öffnet den Tailscale-UDP-Port für direkte Peer-to-Peer-Verbindungen.
+    openFirewall = true;
+  };
 }
