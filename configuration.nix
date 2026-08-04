@@ -7,6 +7,7 @@
     ./modules/desktop-plasma.nix
     ./modules/networking.nix
     ./modules/packages.nix
+    ./modules/development.nix
   ];
 
   # Nicht auf spätere NixOS-Versionen ändern.
