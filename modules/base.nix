@@ -38,4 +38,6 @@
 
   # Firefox currently renders incorrectly with its native Wayland backend.
   environment.sessionVariables.MOZ_ENABLE_WAYLAND = "0";
+  environment.sessionVariables.SSH_AUTH_SOCK =
+    "/home/martin/.var/app/com.bitwarden.desktop/data/.bitwarden-ssh-agent.sock";
 }
