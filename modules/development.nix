@@ -8,6 +8,7 @@
 
   environment.systemPackages = with pkgs; [
     vscode
+    opencode
     python3
     gcc
     gnumake
