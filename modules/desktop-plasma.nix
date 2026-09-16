@@ -28,7 +28,13 @@
 
   programs.firefox.enable = true;
 
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
+
   users.users.martin.packages = with pkgs; [
     kdePackages.kate
+    kdePackages.bluedevil
   ];
 }
