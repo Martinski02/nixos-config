@@ -13,7 +13,7 @@
 
     configType = "lua";
 
-    extraLuaFiles."10-common".content = ''
+    extraConfig = ''
       local mainMod = "SUPER"
 
       hl.config({
