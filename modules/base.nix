@@ -25,6 +25,7 @@
   console.keyMap = "de";
 
   users.users.martin = {
+    uid = 1000;
     isNormalUser = true;
     home = "/home/martin";
 
