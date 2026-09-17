@@ -193,6 +193,17 @@ in
         { mouse = true }
       )
 
+      -- Desktop shell
+      hl.bind(
+        mainMod .. " + N",
+        hl.dsp.exec_cmd("swaync-client -t -sw")
+      )
+
+      hl.bind(
+        mainMod .. " + SHIFT + Q",
+        hl.dsp.exec_cmd("wlogout")
+      )
+
       -- Screenshots
       hl.bind(
         "PRINT",
