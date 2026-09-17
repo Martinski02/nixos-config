@@ -220,11 +220,104 @@ in
   programs.waybar = {
     enable = true;
     systemd.enable = true;
+
+    settings = {
+      mainBar = {
+        layer = "top";
+        position = "top";
+        height = 30;
+
+        modules-left = [
+          "hyprland/workspaces"
+        ];
+
+        modules-center = [
+          "hyprland/window"
+        ];
+
+        modules-right = [
+          "tray"
+          "network"
+          "pulseaudio"
+          "clock"
+        ];
+
+        "hyprland/workspaces" = {
+          disable-scroll = true;
+        };
+
+        "hyprland/window" = {
+          max-length = 80;
+        };
+
+        tray = {
+          spacing = 8;
+        };
+
+        network = {
+          format-wifi = "{essid} {signalStrength}%";
+          format-ethernet = "Ethernet";
+          format-disconnected = "Offline";
+          tooltip = true;
+        };
+
+        pulseaudio = {
+          format = "{volume}%";
+          format-muted = "Muted";
+          scroll-step = 5;
+        };
+
+        clock = {
+          format = "{:%H:%M}";
+          format-alt = "{:%A, %d.%m.%Y}";
+          tooltip-format = "<tt>{calendar}</tt>";
+        };
+      };
+    };
   };
 
-  programs.fuzzel.enable = true;
+  programs.fuzzel = {
+    enable = true;
 
-  programs.hyprlock.enable = true;
+    settings = {
+      main = {
+        terminal = "ghostty";
+        layer = "overlay";
+        width = 40;
+        lines = 12;
+      };
+    };
+  };
+
+  programs.hyprlock = {
+    enable = true;
+
+    settings = {
+      general = {
+        hide_cursor = true;
+        ignore_empty_input = true;
+      };
+
+      background = [
+        {
+          path = "screenshot";
+          blur_passes = 3;
+          blur_size = 8;
+        }
+      ];
+
+      input-field = [
+        {
+          monitor = "";
+          size = "300, 50";
+          position = "0, -80";
+          dots_center = true;
+          fade_on_empty = false;
+          placeholder_text = "<i>Passwort...</i>";
+        }
+      ];
+    };
+  };
 
   services.hypridle = {
     enable = true;
@@ -253,7 +346,25 @@ in
 
   services.hyprpaper.enable = true;
 
-  services.swaync.enable = true;
+  services.swaync = {
+    enable = true;
+
+    settings = {
+      positionX = "right";
+      positionY = "top";
+      layer = "overlay";
+      control-center-layer = "top";
+      layer-shell = true;
+
+      notification-icon-size = 48;
+      notification-body-image-height = 100;
+      notification-body-image-width = 200;
+
+      timeout = 10;
+      timeout-low = 5;
+      timeout-critical = 0;
+    };
+  };
 
   home.packages = with pkgs; [
     screenshotFull
