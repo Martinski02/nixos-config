@@ -1,5 +1,71 @@
 { pkgs, ... }:
 
+let
+  screenshotFull = pkgs.writeShellApplication {
+    name = "screenshot-full";
+
+    runtimeInputs = with pkgs; [
+      coreutils
+      grim
+      libnotify
+      util-linux
+    ];
+
+    text = ''
+      set -euo pipefail
+
+      if ! mountpoint -q /mnt/data; then
+        notify-send "Screenshot not saved" "/mnt/data is not mounted." || true
+        exit 1
+      fi
+
+      target="$HOME/pictures/screenshots"
+      mkdir -p "$target"
+
+      file="$target/$(date '+%Y-%m-%d_%H-%M-%S').png"
+
+      grim "$file"
+
+      notify-send "Screenshot saved" "$file" || true
+    '';
+  };
+
+  screenshotRegion = pkgs.writeShellApplication {
+    name = "screenshot-region";
+
+    runtimeInputs = with pkgs; [
+      coreutils
+      grim
+      libnotify
+      slurp
+      util-linux
+    ];
+
+    text = ''
+      set -euo pipefail
+
+      if ! mountpoint -q /mnt/data; then
+        notify-send "Screenshot not saved" "/mnt/data is not mounted." || true
+        exit 1
+      fi
+
+      geometry="$(slurp)" || exit 0
+
+      if [ -z "$geometry" ]; then
+        exit 0
+      fi
+
+      target="$HOME/pictures/screenshots"
+      mkdir -p "$target"
+
+      file="$target/$(date '+%Y-%m-%d_%H-%M-%S').png"
+
+      grim -g "$geometry" "$file"
+
+      notify-send "Screenshot saved" "$file" || true
+    '';
+  };
+in
 {
   wayland.windowManager.hyprland = {
     enable = true;
@@ -127,6 +193,17 @@
         { mouse = true }
       )
 
+      -- Screenshots
+      hl.bind(
+        "PRINT",
+        hl.dsp.exec_cmd("${screenshotFull}/bin/screenshot-full")
+      )
+
+      hl.bind(
+        mainMod .. " + PRINT",
+        hl.dsp.exec_cmd("${screenshotRegion}/bin/screenshot-region")
+      )
+
       -- Clipboard history
       hl.bind(
         mainMod .. " + SHIFT + V",
@@ -179,6 +256,9 @@
   services.swaync.enable = true;
 
   home.packages = with pkgs; [
+    screenshotFull
+    screenshotRegion
+
     grim
     slurp
     swappy
