@@ -12,4 +12,13 @@
     priority = 100;
     algorithm = "zstd";
   };
+
+  environment.etc."crypttab".text = ''
+    cryptdata UUID=053529f8-77c7-4005-8660-e4c281d2522b /root/.keys/cryptdata.key luks
+  '';
+
+  fileSystems."/mnt/data" = {
+    device = "/dev/mapper/cryptdata";
+    fsType = "ext4";
+  };
 }
