@@ -13,6 +13,20 @@
     algorithm = "zstd";
   };
 
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 40960;
+      priority = 10;
+    }
+  ];
+
+  boot.resumeDevice = "/dev/mapper/cryptroot";
+
+  boot.kernelParams = [
+    "resume_offset=145000448"
+  ];
+
   environment.etc."crypttab".text = ''
     cryptdata UUID=053529f8-77c7-4005-8660-e4c281d2522b /root/.keys/cryptdata.key luks
   '';
