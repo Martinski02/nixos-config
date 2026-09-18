@@ -2,6 +2,7 @@
 
 {
   imports = [
+     ./hardware-configuration.nix
     ../../modules/base.nix
     ../../modules/networking.nix
     ../../modules/ssh.nix
