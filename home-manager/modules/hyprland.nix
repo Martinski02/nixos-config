@@ -9,6 +9,7 @@ let
       grim
       libnotify
       util-linux
+      wl-clipboard
     ];
 
     text = ''
@@ -25,6 +26,7 @@ let
       file="$target/$(date '+%Y-%m-%d_%H-%M-%S').png"
 
       grim "$file"
+      wl-copy --type image/png < "$file"
 
       notify-send "Screenshot saved" "$file" || true
     '';
@@ -39,6 +41,7 @@ let
       libnotify
       slurp
       util-linux
+      wl-clipboard
     ];
 
     text = ''
@@ -61,6 +64,7 @@ let
       file="$target/$(date '+%Y-%m-%d_%H-%M-%S').png"
 
       grim -g "$geometry" "$file"
+      wl-copy --type image/png < "$file"
 
       notify-send "Screenshot saved" "$file" || true
     '';
@@ -85,8 +89,8 @@ in
       hl.config({
         general = {
           layout = "dwindle",
-          gaps_in = 6,
-          gaps_out = 8,
+          gaps_in = 0,
+          gaps_out = 0,
           border_size = 2,
         },
 
@@ -206,12 +210,12 @@ in
 
       -- Screenshots
       hl.bind(
-        "PRINT",
+        mainMod .. " + CTRL + SHIFT + S",
         hl.dsp.exec_cmd("${screenshotFull}/bin/screenshot-full")
       )
 
       hl.bind(
-        mainMod .. " + PRINT",
+        mainMod .. " + SHIFT + S",
         hl.dsp.exec_cmd("${screenshotRegion}/bin/screenshot-region")
       )
 
