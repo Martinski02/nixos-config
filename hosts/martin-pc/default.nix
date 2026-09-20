@@ -18,6 +18,7 @@
     ./development.nix
     ./gaming.nix
     ./packages.nix
+    ./backup.nix
   ];
 
   networking.hostName = "martin-pc";
