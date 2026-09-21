@@ -16,7 +16,7 @@
     ./ssh.nix
     ./hyprland.nix
     ./development.nix
-    ./gaming.nix
+    ./hardware-extra.nix
     ./packages.nix
     ./backup.nix
   ];

@@ -3,6 +3,7 @@
 {
   imports = [
     ./hyprland.nix
+    ./night-mode.nix
   ];
 
   home.file = {

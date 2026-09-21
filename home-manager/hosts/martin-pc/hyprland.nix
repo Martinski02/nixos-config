@@ -2,6 +2,14 @@
 
 {
   wayland.windowManager.hyprland.extraConfig = ''
+    -- Wake displays after DPMS off
+    hl.config({
+      misc = {
+        mouse_move_enables_dpms = true,
+        key_press_enables_dpms = true,
+      },
+    })
+
     -- Monitors
     -- BenQ: physically left
     hl.monitor({
@@ -39,4 +47,30 @@
       })
     end
   '';
+
+  services.hypridle = {
+    enable = true;
+
+    settings = {
+      general = {
+        lock_cmd = "pidof hyprlock || hyprlock";
+        before_sleep_cmd = "loginctl lock-session";
+        after_sleep_cmd = "hyprctl dispatch 'hl.dsp.dpms({ action = \"enable\" })'";
+      };
+
+      listener = [
+        {
+          timeout = 600;
+          on-timeout = "loginctl lock-session";
+        }
+
+        {
+          timeout = 900;
+          ignore_inhibit = true;
+          on-timeout = "if pidof hyprlock >/dev/null; then hyprctl dispatch 'hl.dsp.dpms({ action = \"disable\" })'; fi";
+          on-resume = "hyprctl dispatch 'hl.dsp.dpms({ action = \"enable\" })'";
+        }
+      ];
+    };
+  };
 }
