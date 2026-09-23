@@ -45,8 +45,7 @@
     {
       nixosConfigurations = {
         martin-pc = mkHost "martin-pc";
-
-        # martin-laptop wird später auf diese Architektur migriert.
+        martin-laptop = mkHost "martin-laptop";
       };
     };
 }
