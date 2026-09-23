@@ -384,9 +384,46 @@ in
     hyprpolkitagent
   ];
 
+  xdg.configFile."wlogout/layout".text = ''
+    {
+        "label" : "lock",
+        "action" : "loginctl lock-session",
+        "text" : "Lock",
+        "keybind" : "l"
+    }
+    {
+        "label" : "hibernate",
+        "action" : "systemctl hibernate",
+        "text" : "Hibernate",
+        "keybind" : "h"
+    }
+    {
+        "label" : "logout",
+        "action" : "uwsm stop",
+        "text" : "Logout",
+        "keybind" : "e"
+    }
+    {
+        "label" : "shutdown",
+        "action" : "systemctl poweroff",
+        "text" : "Shutdown",
+        "keybind" : "s"
+    }
+    {
+        "label" : "suspend",
+        "action" : "systemctl suspend",
+        "text" : "Suspend",
+        "keybind" : "u"
+    }
+    {
+        "label" : "reboot",
+        "action" : "systemctl reboot",
+        "text" : "Reboot",
+        "keybind" : "r"
+    }
+  '';
+
   # Hyprland-only session services.
-  # KDE remains installed as a fallback and owns its own notification,
-  # polkit and desktop-shell services.
   systemd.user.services.waybar.Unit.ConditionEnvironment = lib.mkForce [
     "WAYLAND_DISPLAY"
     "XDG_CURRENT_DESKTOP=Hyprland"

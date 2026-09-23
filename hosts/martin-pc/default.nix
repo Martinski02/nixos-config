@@ -6,6 +6,7 @@
 
     ../../modules/base.nix
     ../../modules/networking.nix
+    ../../modules/bluetooth.nix
     ../../modules/ssh.nix
     ../../modules/development.nix
     ../../modules/packages.nix
