@@ -1,26 +1,50 @@
 { ... }:
 
+let
+  commonIdentity = {
+    IdentityFile = "~/.ssh/id_ed25519";
+    IdentitiesOnly = true;
+    AddKeysToAgent = "yes";
+  };
+
+  martinHost = commonIdentity // {
+    User = "martin";
+  };
+in
 {
   programs.ssh = {
     enable = true;
+    enableDefaultConfig = false;
 
-    matchBlocks = {
-      "github.com" = {
-        hostname = "github.com";
-        user = "git";
-
-        identityFile = "~/.ssh/id_ed25519";
-        identitiesOnly = true;
-        addKeysToAgent = "yes";
+    settings = {
+      "*" = {
+        ForwardAgent = false;
+        AddKeysToAgent = "no";
+        Compression = false;
+        ServerAliveInterval = 0;
+        ServerAliveCountMax = 3;
+        HashKnownHosts = false;
+        UserKnownHostsFile = "~/.ssh/known_hosts";
+        ControlMaster = "no";
+        ControlPath = "~/.ssh/master-%r@%n:%p";
+        ControlPersist = "no";
       };
 
-      "martin-server" = {
-        hostname = "martin-server";
-        user = "martin";
+      "github.com" = commonIdentity // {
+        HostName = "github.com";
+        User = "git";
+      };
 
-        identityFile = "~/.ssh/id_ed25519";
-        identitiesOnly = true;
-        addKeysToAgent = "yes";
+      "martin-server" = martinHost // {
+        HostName = "martin-server";
+      };
+
+      "martin-pc" = martinHost // {
+        HostName = "martin-pc";
+      };
+
+      "martin-laptop" = martinHost // {
+        HostName = "martin-laptop";
       };
     };
   };
