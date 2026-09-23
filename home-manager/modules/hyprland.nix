@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 let
   screenshotFull = pkgs.writeShellApplication {
@@ -384,11 +384,33 @@ in
     hyprpolkitagent
   ];
 
+  # Hyprland-only session services.
+  # KDE remains installed as a fallback and owns its own notification,
+  # polkit and desktop-shell services.
+  systemd.user.services.waybar.Unit.ConditionEnvironment = lib.mkForce [
+    "WAYLAND_DISPLAY"
+    "XDG_CURRENT_DESKTOP=Hyprland"
+  ];
+
+  systemd.user.services.hyprpaper.Unit.ConditionEnvironment = lib.mkForce [
+    "WAYLAND_DISPLAY"
+    "XDG_CURRENT_DESKTOP=Hyprland"
+  ];
+
+  systemd.user.services.swaync.Unit.ConditionEnvironment = lib.mkForce [
+    "WAYLAND_DISPLAY"
+    "XDG_CURRENT_DESKTOP=Hyprland"
+  ];
+
   systemd.user.services.cliphist-text = {
     Unit = {
       Description = "Cliphist text clipboard watcher";
       PartOf = [ "graphical-session.target" ];
       After = [ "graphical-session.target" ];
+      ConditionEnvironment = [
+        "WAYLAND_DISPLAY"
+        "XDG_CURRENT_DESKTOP=Hyprland"
+      ];
     };
 
     Service = {
@@ -406,6 +428,10 @@ in
       Description = "Cliphist image clipboard watcher";
       PartOf = [ "graphical-session.target" ];
       After = [ "graphical-session.target" ];
+      ConditionEnvironment = [
+        "WAYLAND_DISPLAY"
+        "XDG_CURRENT_DESKTOP=Hyprland"
+      ];
     };
 
     Service = {
@@ -423,6 +449,10 @@ in
       Description = "Hyprland Polkit authentication agent";
       PartOf = [ "graphical-session.target" ];
       After = [ "graphical-session.target" ];
+      ConditionEnvironment = [
+        "WAYLAND_DISPLAY"
+        "XDG_CURRENT_DESKTOP=Hyprland"
+      ];
     };
 
     Service = {
