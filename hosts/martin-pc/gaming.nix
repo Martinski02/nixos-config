@@ -2,6 +2,6 @@
 
 {
   imports = [
-    ../../modules/hyprland.nix
+    ../../modules/gaming.nix
   ];
 }
