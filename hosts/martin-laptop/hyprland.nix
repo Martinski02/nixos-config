@@ -3,6 +3,5 @@
 {
   imports = [
     ../../modules/hyprland.nix
-    ./hyprland.nix
   ];
 }

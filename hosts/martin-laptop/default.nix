@@ -12,6 +12,7 @@
 
     ./base.nix
     ./desktop-plasma.nix
+    ./hyprland.nix
   ];
 
   networking.hostName = "martin-laptop";
