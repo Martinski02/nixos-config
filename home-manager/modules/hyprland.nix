@@ -15,9 +15,17 @@ let
     text = ''
       set -euo pipefail
 
-      if ! mountpoint -q /mnt/data; then
-        notify-send "Screenshot not saved" "/mnt/data is not mounted." || true
-        exit 1
+      pictures_link="$(readlink "$HOME/pictures" 2>/dev/null || true)"
+
+      if [[ "$pictures_link" == /mnt/* ]]; then
+        mount_name="''${pictures_link#/mnt/}"
+        mount_name="''${mount_name%%/*}"
+        mount_root="/mnt/$mount_name"
+
+        if ! mountpoint -q "$mount_root"; then
+          notify-send "Screenshot not saved" "$mount_root is not mounted." || true
+          exit 1
+        fi
       fi
 
       target="$HOME/pictures/screenshots"
@@ -47,9 +55,17 @@ let
     text = ''
       set -euo pipefail
 
-      if ! mountpoint -q /mnt/data; then
-        notify-send "Screenshot not saved" "/mnt/data is not mounted." || true
-        exit 1
+      pictures_link="$(readlink "$HOME/pictures" 2>/dev/null || true)"
+
+      if [[ "$pictures_link" == /mnt/* ]]; then
+        mount_name="''${pictures_link#/mnt/}"
+        mount_name="''${mount_name%%/*}"
+        mount_root="/mnt/$mount_name"
+
+        if ! mountpoint -q "$mount_root"; then
+          notify-send "Screenshot not saved" "$mount_root is not mounted." || true
+          exit 1
+        fi
       fi
 
       geometry="$(slurp)" || exit 0
