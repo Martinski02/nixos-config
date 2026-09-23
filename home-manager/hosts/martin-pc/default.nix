@@ -2,6 +2,9 @@
 
 {
   imports = [
+    ../../modules/gaming.nix
+    ../../modules/hyprland.nix
+
     ./hyprland.nix
     ./night-mode.nix
   ];
