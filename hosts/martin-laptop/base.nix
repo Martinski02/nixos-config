@@ -1,7 +1,11 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   system.stateVersion = "26.05";
+
+  environment.systemPackages = with pkgs; [
+    brightnessctl
+  ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
