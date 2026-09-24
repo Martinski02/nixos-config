@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   wayland.windowManager.hyprland.extraConfig = ''
@@ -9,6 +9,31 @@
         key_press_enables_dpms = true,
       },
     })
+
+    -- PC audio / media controls
+    hl.bind("XF86AudioMute", hl.dsp.exec_cmd(
+      "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+    ))
+
+    hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(
+      "${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+    ))
+
+    hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(
+      "${pkgs.wireplumber}/bin/wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+"
+    ))
+
+    hl.bind("XF86AudioPlay", hl.dsp.exec_cmd(
+      "${pkgs.playerctl}/bin/playerctl play-pause"
+    ))
+
+    hl.bind("XF86AudioNext", hl.dsp.exec_cmd(
+      "${pkgs.playerctl}/bin/playerctl next"
+    ))
+
+    hl.bind("XF86AudioPrev", hl.dsp.exec_cmd(
+      "${pkgs.playerctl}/bin/playerctl previous"
+    ))
 
     -- Monitors
     -- BenQ: physically left
