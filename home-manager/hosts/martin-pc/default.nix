@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [
@@ -8,6 +8,8 @@
     ./hyprland.nix
     ./night-mode.nix
   ];
+
+  programs.btop.package = pkgs.btop-rocm;
 
   home.file = {
     "documents".source =
