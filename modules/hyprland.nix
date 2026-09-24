@@ -28,7 +28,15 @@
 
   security.rtkit.enable = true;
 
-  security.pam.services.hyprlock = { };
+  services.gnome = {
+    gnome-keyring.enable = true;
+    gcr-ssh-agent.enable = false;
+  };
+
+  security.pam.services = {
+    hyprlock = { };
+    sddm.enableGnomeKeyring = true;
+  };
 
   services.pipewire = {
     enable = true;
