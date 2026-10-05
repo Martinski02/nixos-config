@@ -51,26 +51,6 @@
       position = "1920x0",
       scale = 1,
     })
-
-    -- Workspaces 1-5: AOC
-    for i = 1, 5 do
-      hl.workspace_rule({
-        workspace = tostring(i),
-        monitor = "DP-3",
-        default = (i == 1),
-        persistent = true,
-      })
-    end
-
-    -- Workspaces 6-9: BenQ
-    for i = 6, 9 do
-      hl.workspace_rule({
-        workspace = tostring(i),
-        monitor = "HDMI-A-1",
-        default = (i == 6),
-        persistent = true,
-      })
-    end
   '';
 
   services.hypridle = {

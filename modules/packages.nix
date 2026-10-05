@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 
 {
   nixpkgs.config.allowUnfreePredicate = pkg:
@@ -8,4 +8,8 @@
       "steam-original"
       "steam-unwrapped"
     ];
+
+  fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
+  ];
 }

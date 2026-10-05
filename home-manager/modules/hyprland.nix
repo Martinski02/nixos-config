@@ -248,65 +248,6 @@ in
     '';
   };
 
-  programs.waybar = {
-    enable = true;
-    systemd.enable = true;
-
-    settings = {
-      mainBar = {
-        layer = "top";
-        position = "top";
-        height = 30;
-
-        modules-left = [
-          "hyprland/workspaces"
-        ];
-
-        modules-center = [
-          "hyprland/window"
-        ];
-
-        modules-right = [
-          "tray"
-          "network"
-          "pulseaudio"
-          "clock"
-        ];
-
-        "hyprland/workspaces" = {
-          disable-scroll = true;
-        };
-
-        "hyprland/window" = {
-          max-length = 80;
-        };
-
-        tray = {
-          spacing = 8;
-        };
-
-        network = {
-          format-wifi = "{essid} {signalStrength}%";
-          format-ethernet = "Ethernet";
-          format-disconnected = "Offline";
-          tooltip = true;
-        };
-
-        pulseaudio = {
-          format = "{volume}%";
-          format-muted = "Muted";
-          scroll-step = 5;
-        };
-
-        clock = {
-          format = "{:%H:%M}";
-          format-alt = "{:%A, %d.%m.%Y}";
-          tooltip-format = "<tt>{calendar}</tt>";
-        };
-      };
-    };
-  };
-
   programs.fuzzel = {
     enable = true;
 

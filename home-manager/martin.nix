@@ -11,6 +11,7 @@
     ./modules/ghostty.nix
     ./modules/vscode.nix
 
+    ./modules/theme
     ./hosts/${hostName}/default.nix
   ];
 
