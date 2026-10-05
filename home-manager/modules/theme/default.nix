@@ -8,7 +8,7 @@ let
       pywal16
       hyprland
       jq
-      procps
+      systemd
     ];
 
     text = ''
@@ -67,9 +67,7 @@ let
         -q \
         -i "$wallpaper"
 
-      if pgrep -x waybar >/dev/null; then
-        pkill -SIGUSR2 waybar
-      fi
+      systemctl --user restart waybar.service
 
       echo
       echo "Theme palette updated."
@@ -79,8 +77,45 @@ in
 {
   home.packages = [
     pkgs.pywal16
+    pkgs.waypaper
+    pkgs.hyprpaper
     themeFromWallpaper
   ];
+
+  # Waypaper needs a writable config because its GUI updates settings.
+  # Seed it once; runtime state is kept separately via use_xdg_state.
+  home.activation.waypaperConfig =
+    lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+      cfg="${config.xdg.configHome}/waypaper/config.ini"
+
+      mkdir -p "$(dirname "$cfg")"
+
+      # Replace the old Home-Manager/Nix-store symlink from the
+      # previous declarative implementation.
+      if [ -L "$cfg" ]; then
+        target="$(readlink -f "$cfg" || true)"
+        case "$target" in
+          /nix/store/*)
+            rm -f "$cfg"
+            ;;
+        esac
+      fi
+
+      if [ ! -e "$cfg" ]; then
+        cat > "$cfg" <<'EOF'
+[Settings]
+folder = ${config.home.homeDirectory}/pictures/wallpapers
+backend = hyprpaper
+fill = fill
+monitors = All
+subfolders = False
+all_subfolders = False
+show_hidden = False
+post_command = theme-from-wallpaper "$wallpaper"
+use_xdg_state = True
+EOF
+      fi
+    '';
 
   xdg.configFile."wal/templates/waybar.css".source =
     ./templates/waybar.css;

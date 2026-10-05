@@ -220,6 +220,16 @@ in
       )
 
       hl.bind(
+        mainMod .. " + W",
+        hl.dsp.exec_cmd("${pkgs.waypaper}/bin/waypaper")
+      )
+
+      hl.bind(
+        mainMod .. " + E",
+        hl.dsp.exec_cmd("${pkgs.kdePackages.dolphin}/bin/dolphin")
+      )
+
+      hl.bind(
         mainMod .. " + SHIFT + Q",
         hl.dsp.exec_cmd("wlogout")
       )
