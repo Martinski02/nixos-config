@@ -51,6 +51,15 @@
       position = "1920x0",
       scale = 1,
     })
+
+    -- Geometry Dash
+    hl.window_rule({
+      name = "geometry-dash-float",
+      match = {
+        class = "^steam_app_322170$",
+      },
+      float = true,
+    })
   '';
 
   services.hypridle = {
