@@ -45,6 +45,15 @@ end, {
   desc = "Diff file",
 })
 
+-- 42
+map("n", "<leader>ln", "<cmd>Norminette<CR>", {
+  desc = "Norminette current file",
+})
+
+map("n", "<leader>lN", "<cmd>NorminetteDir<CR>", {
+  desc = "Norminette current directory",
+})
+
 -- LSP mappings only exist where an LSP is actually attached.
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(event)

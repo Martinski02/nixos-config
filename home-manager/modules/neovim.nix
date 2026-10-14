@@ -1,5 +1,18 @@
 { pkgs, ... }:
 
+let
+  header42 = pkgs.vimUtils.buildVimPlugin {
+    pname = "42header";
+    version = "8ccddfe";
+
+    src = pkgs.fetchFromGitHub {
+      owner = "42Paris";
+      repo = "42header";
+      rev = "8ccddfe98127e2f90b7ddf91512224f554fd79b2";
+      hash = "sha256-waAi4BfTulro6Pvs2xPsW7RrMhggt+OBwy5FAoUYGTs=";
+    };
+  };
+in
 {
   programs.neovim = {
     enable = true;
@@ -7,7 +20,7 @@
     viAlias = true;
     vimAlias = true;
 
-    plugins = with pkgs.vimPlugins; [
+    plugins = (with pkgs.vimPlugins; [
       kanagawa-nvim
 
       nvim-web-devicons
@@ -29,6 +42,9 @@
       blink-cmp
 
       conform-nvim
+    ])
+    ++ [
+        header42
     ];
 
     extraPackages = with pkgs; [
@@ -48,6 +64,9 @@
       stylua
       black
       shfmt
+
+      # 42
+      norminette
     ];
 
     initLua = builtins.readFile ./neovim/init.lua;
