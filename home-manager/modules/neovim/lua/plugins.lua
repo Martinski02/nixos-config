@@ -79,7 +79,7 @@ require("gitsigns").setup({})
 -- Completion
 require("blink.cmp").setup({
   keymap = {
-    preset = "default",
+    preset = "super-tab",
   },
 
   completion = {
