@@ -74,6 +74,7 @@ let
     '';
   };
 in
+
 {
   home.packages = [
     pkgs.pywal16
@@ -81,6 +82,29 @@ in
     pkgs.hyprpaper
     themeFromWallpaper
   ];
+
+  systemd.user.services.waypaper-restore = {
+    Unit = {
+      Description = "Restore Waypaper wallpaper";
+      After = [ "hyprpaper.service" ];
+      Requires = [ "hyprpaper.service" ];
+      PartOf = [ "graphical-session.target" ];
+      ConditionEnvironment = [
+        "WAYLAND_DISPLAY"
+        "XDG_CURRENT_DESKTOP=Hyprland"
+      ];
+    };
+
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.waypaper}/bin/waypaper --restore";
+    };
+
+    Install.WantedBy = [
+      "graphical-session.target"
+    ];
+  };
+
 
   # Waypaper needs a writable config because its GUI updates settings.
   # Seed it once; runtime state is kept separately via use_xdg_state.
