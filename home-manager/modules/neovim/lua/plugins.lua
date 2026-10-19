@@ -76,13 +76,54 @@ require("nvim-autopairs").setup({})
 -- Git indicators
 require("gitsigns").setup({})
 
+local function hide_completion_after_move(cmp)
+  cmp.hide()
+
+  vim.schedule(function()
+    require("blink.cmp").hide()
+  end)
+
+  return false
+end
+
 -- Completion
 require("blink.cmp").setup({
   keymap = {
     preset = "super-tab",
+
+    ["<Tab>"] = {
+      function(cmp)
+        if cmp.snippet_active() then
+          return cmp.accept()
+        end
+
+        if cmp.is_visible() then
+          return cmp.select_and_accept()
+        end
+
+        return false
+      end,
+      "snippet_forward",
+      "fallback",
+    },
+
+    ["<Up>"] = {
+      hide_completion_after_move,
+      "fallback",
+    },
+
+    ["<Down>"] = {
+      hide_completion_after_move,
+      "fallback",
+    },
   },
 
   completion = {
+    trigger = {
+      show_on_keyword = true,
+      show_on_insert = false,
+    },
+
     documentation = {
       auto_show = true,
       auto_show_delay_ms = 250,
