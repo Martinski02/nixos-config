@@ -9,6 +9,19 @@
     serviceConfig.TimeoutStopSec = "10s";
   };
 
+  # Restore systemd's block-device shutdown ordering for LUKS mounts.
+  systemd.targets."blockdev@" = {
+    description = "Block Device Preparation for %f";
+
+    unitConfig = {
+      DefaultDependencies = false;
+      StopWhenUnneeded = true;
+    };
+
+    conflicts = [ "umount.target" ];
+    before = [ "umount.target" ];
+  };
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
