@@ -3,6 +3,12 @@
 {
   system.stateVersion = "26.05";
 
+  # Limit shutdown delays caused by xdg-document-portal/FUSE.
+  systemd.user.services.xdg-document-portal = {
+    overrideStrategy = "asDropin";
+    serviceConfig.TimeoutStopSec = "10s";
+  };
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
