@@ -7,6 +7,7 @@
     gcc
     gnumake
     pkg-config
+    norminette
   ];
 
   programs.direnv = {
