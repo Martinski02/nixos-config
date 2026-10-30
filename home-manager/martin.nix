@@ -10,6 +10,7 @@
     ./modules/neovim.nix
     ./modules/ghostty.nix
     ./modules/vscode.nix
+    ./modules/codex.nix
 
     ./modules/theme
     ./hosts/${hostName}/default.nix
