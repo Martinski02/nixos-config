@@ -16,6 +16,11 @@ in
     enable = true;
     mutableExtensionsDir = false;
 
+    argvSettings = {
+      "password-store" = "gnome-libsecret";
+      "enable-crash-reporter" = true;
+    };
+
     profiles.default = {
       extensions =
         (with pkgs.vscode-extensions; [
