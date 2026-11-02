@@ -18,6 +18,7 @@
     ./gaming.nix
     ./development.nix
     ./hardware-extra.nix
+    ./rgb.nix
     ./packages.nix
     ./backup.nix
   ];

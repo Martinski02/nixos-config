@@ -7,7 +7,7 @@
     ../../modules/waybar.nix
 
     ./hyprland.nix
-    ./night-mode.nix
+    ./rgb.nix
   ];
 
   programs.btop.package = pkgs.btop-rocm;
