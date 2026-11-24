@@ -128,7 +128,7 @@ in
       if [ ! -e "$cfg" ]; then
         cat > "$cfg" <<'EOF'
 [Settings]
-folder = ${if config.xdg.userDirs.enable then config.xdg.userDirs.pictures else "${config.home.homeDirectory}/pictures"}/wallpapers
+folder = ${config.xdg.userDirs.pictures}/wallpapers
 backend = hyprpaper
 fill = fill
 monitors = All

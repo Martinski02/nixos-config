@@ -28,13 +28,4 @@
     "Nextcloud".source =
       config.lib.file.mkOutOfStoreSymlink "/mnt/data/media/documents/nextcloud";
   };
-
-  xdg.userDirs = {
-    enable = true;
-    createDirectories = false;
-
-    documents = "${config.home.homeDirectory}/Documents";
-    pictures = "${config.home.homeDirectory}/Pictures";
-    videos = "${config.home.homeDirectory}/Videos";
-  };
 }

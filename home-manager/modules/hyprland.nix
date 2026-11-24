@@ -4,11 +4,6 @@ let
   screenshotTarget = ''
     pictures="$(xdg-user-dir PICTURES)"
 
-    # Compatibility with the laptop's existing directory layout.
-    if [[ ! -e "$pictures" && ! -L "$pictures" && -d "$HOME/pictures" ]]; then
-      pictures="$HOME/pictures"
-    fi
-
     if [[ "$pictures" != /* || "$pictures" == "$HOME" ]]; then
       notify-send "Screenshot not saved" "Invalid Pictures directory." || true
       exit 1
