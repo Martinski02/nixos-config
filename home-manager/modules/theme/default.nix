@@ -101,7 +101,7 @@ in
     };
 
     Install.WantedBy = [
-      "graphical-session.target"
+      "hyprpaper.service"
     ];
   };
 
@@ -128,7 +128,7 @@ in
       if [ ! -e "$cfg" ]; then
         cat > "$cfg" <<'EOF'
 [Settings]
-folder = ${config.home.homeDirectory}/pictures/wallpapers
+folder = ${if config.xdg.userDirs.enable then config.xdg.userDirs.pictures else "${config.home.homeDirectory}/pictures"}/wallpapers
 backend = hyprpaper
 fill = fill
 monitors = All
