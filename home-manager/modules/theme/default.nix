@@ -97,7 +97,8 @@ in
 
     Service = {
       Type = "oneshot";
-      ExecStart = "${pkgs.waypaper}/bin/waypaper --restore";
+      ExecStart = "${pkgs.waypaper}/bin/waypaper --restore --no-post-command";
+      ExecStartPost = "${themeFromWallpaper}/bin/theme-from-wallpaper";
     };
 
     Install.WantedBy = [
