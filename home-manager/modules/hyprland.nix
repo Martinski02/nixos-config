@@ -1,6 +1,38 @@
 { lib, pkgs, ... }:
 
 let
+  screenshotTarget = ''
+    pictures="$(xdg-user-dir PICTURES)"
+
+    # Compatibility with the laptop's existing directory layout.
+    if [[ ! -e "$pictures" && ! -L "$pictures" && -d "$HOME/pictures" ]]; then
+      pictures="$HOME/pictures"
+    fi
+
+    if [[ "$pictures" != /* || "$pictures" == "$HOME" ]]; then
+      notify-send "Screenshot not saved" "Invalid Pictures directory." || true
+      exit 1
+    fi
+
+    if ! resolved="$(realpath -e -- "$pictures")" || [[ ! -d "$resolved" ]]; then
+      notify-send "Screenshot not saved" "Pictures directory unavailable." || true
+      exit 1
+    fi
+
+    if [[ "$resolved" == /mnt/* ]]; then
+      mount_name="''${resolved#/mnt/}"
+      mount_name="''${mount_name%%/*}"
+      mount_root="/mnt/$mount_name"
+
+      if ! mountpoint -q "$mount_root"; then
+        notify-send "Screenshot not saved" "$mount_root is not mounted." || true
+        exit 1
+      fi
+    fi
+
+    target="$pictures/screenshots"
+  '';
+
   screenshotFull = pkgs.writeShellApplication {
     name = "screenshot-full";
 
@@ -10,25 +42,14 @@ let
       libnotify
       util-linux
       wl-clipboard
+      xdg-user-dirs
     ];
 
     text = ''
       set -euo pipefail
 
-      pictures_link="$(readlink "$HOME/pictures" 2>/dev/null || true)"
+      ${screenshotTarget}
 
-      if [[ "$pictures_link" == /mnt/* ]]; then
-        mount_name="''${pictures_link#/mnt/}"
-        mount_name="''${mount_name%%/*}"
-        mount_root="/mnt/$mount_name"
-
-        if ! mountpoint -q "$mount_root"; then
-          notify-send "Screenshot not saved" "$mount_root is not mounted." || true
-          exit 1
-        fi
-      fi
-
-      target="$HOME/pictures/screenshots"
       mkdir -p "$target"
 
       file="$target/$(date '+%Y-%m-%d_%H-%M-%S').png"
@@ -50,23 +71,13 @@ let
       slurp
       util-linux
       wl-clipboard
+      xdg-user-dirs
     ];
 
     text = ''
       set -euo pipefail
 
-      pictures_link="$(readlink "$HOME/pictures" 2>/dev/null || true)"
-
-      if [[ "$pictures_link" == /mnt/* ]]; then
-        mount_name="''${pictures_link#/mnt/}"
-        mount_name="''${mount_name%%/*}"
-        mount_root="/mnt/$mount_name"
-
-        if ! mountpoint -q "$mount_root"; then
-          notify-send "Screenshot not saved" "$mount_root is not mounted." || true
-          exit 1
-        fi
-      fi
+      ${screenshotTarget}
 
       geometry="$(slurp)" || exit 0
 
@@ -74,7 +85,6 @@ let
         exit 0
       fi
 
-      target="$HOME/pictures/screenshots"
       mkdir -p "$target"
 
       file="$target/$(date '+%Y-%m-%d_%H-%M-%S').png"
