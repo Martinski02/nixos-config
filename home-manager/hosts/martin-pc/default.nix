@@ -13,19 +13,19 @@
   programs.btop.package = pkgs.btop-rocm;
 
   home.file = {
-    "documents".source =
+    "Documents".source =
       config.lib.file.mkOutOfStoreSymlink "/mnt/data/media/documents";
 
-    "pictures".source =
+    "Pictures".source =
       config.lib.file.mkOutOfStoreSymlink "/mnt/data/media/pictures";
 
-    "videos".source =
+    "Videos".source =
       config.lib.file.mkOutOfStoreSymlink "/mnt/data/media/videos";
 
-    "games".source =
+    "Games".source =
       config.lib.file.mkOutOfStoreSymlink "/mnt/data/games";
 
-    "nextcloud".source =
+    "Nextcloud".source =
       config.lib.file.mkOutOfStoreSymlink "/mnt/data/media/documents/nextcloud";
   };
 
@@ -33,8 +33,8 @@
     enable = true;
     createDirectories = false;
 
-    documents = "${config.home.homeDirectory}/documents";
-    pictures = "${config.home.homeDirectory}/pictures";
-    videos = "${config.home.homeDirectory}/videos";
+    documents = "${config.home.homeDirectory}/Documents";
+    pictures = "${config.home.homeDirectory}/Pictures";
+    videos = "${config.home.homeDirectory}/Videos";
   };
 }
