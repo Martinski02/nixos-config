@@ -34,4 +34,9 @@
       "wheel"
     ];
   };
+
+  # Private temporary workspace with automatic age-based cleanup.
+  systemd.tmpfiles.rules = [
+    "d /home/martin/Tmp 0700 martin users 30d -"
+  ];
 }
